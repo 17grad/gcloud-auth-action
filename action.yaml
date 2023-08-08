@@ -1,0 +1,33 @@
+name: 'Google Cloud Auth'
+description: 'Authenticates to Google Cloud and configures Docker to push to GCR'
+inputs:
+  gcp-credentials:
+    description: 'GCP Credentials'
+    required: true
+
+  gcp-project-id:
+    description: 'GCP Project ID'
+    required: true
+
+  gcp-artifact-repo:
+    description: 'GCP Artifact Repository'
+    required: true
+
+runs:
+  using: "composite"
+  steps:
+    - id: auth
+      name: Authenticate to Google Cloud
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: ${{ inputs.gcp-credentials }}
+
+    - name: 'Set up Cloud SDK'
+      uses: 'google-github-actions/setup-gcloud@v1'
+      with:
+        version: '>= 363.0.0'
+        project_id: ${{ inputs.gcp-project-id }}
+
+    - name: Authenticate Docker to GCR
+      run: gcloud auth configure-docker ${{ inputs.gcp-artifact-repo }}
+      shell: bash
