@@ -44,7 +44,7 @@ jobs:
           gcp-project-id: your-gcp-project-id
           gcp-artifact-repo: your-gcp-artifact-repo
 ```
-Remember to store your GCP credentials as a secret in your repository and refer to them using ${{ secrets.YOUR_SECRET_NAME }}.
+Remember to store your GCP credentials as a secret in your repository and refer to them using `${{ secrets.YOUR_SECRET_NAME }}`.
 
 ## License
 Your licensing information here.
